@@ -1,5 +1,6 @@
 package com.example.Forum.configs;
 
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -7,10 +8,10 @@ import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.TemplateResolver;
 
 @Configuration
@@ -26,18 +27,21 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public TemplateEngine templateEngine(TemplateResolver templateResolver) {
+    public SpringTemplateEngine templateEngine(TemplateResolver templateResolver) {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver);
+        templateEngine.addDialect(new SpringSecurityDialect());
         return templateEngine;
     }
 
     @Bean
     public TemplateResolver templateResolver() {
-        TemplateResolver templateResolver = new ServletContextTemplateResolver();
-        templateResolver.setPrefix("/templates/");
+        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+        templateResolver.setPrefix("./WEB-INF/templates/");
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode("HTML5");
+        templateResolver.setCharacterEncoding("UTF-8");
+        templateResolver.setOrder(0);
         return templateResolver;
     }
 
