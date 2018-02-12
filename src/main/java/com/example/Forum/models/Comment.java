@@ -3,6 +3,7 @@ package com.example.Forum.models;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import java.util.Date;
 
 @Entity
 public class Comment {
@@ -14,6 +15,8 @@ public class Comment {
     private UserCredentials user;
 
     private String description;
+
+    private Date creationDate;
 
     public Comment() {
     }
@@ -41,4 +44,13 @@ public class Comment {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
 }

@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -24,6 +25,8 @@ public class UserCredentials {
     private String password;
 
     private boolean enabled;
+
+    private Date creationDate;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "UserCredentialsRoles", joinColumns = {
@@ -75,6 +78,14 @@ public class UserCredentials {
         this.enabled = enabled;
     }
 
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
     public List<UserRole> getRoles() {
         return roles;
     }
@@ -82,4 +93,5 @@ public class UserCredentials {
     public void setRoles(List<UserRole> roles) {
         this.roles = roles;
     }
+
 }

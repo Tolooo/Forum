@@ -1,6 +1,7 @@
 package com.example.Forum.models;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -12,6 +13,11 @@ public class Topic {
     private String title;
 
     private String description;
+
+    private Date creationDate;
+
+    @OneToOne
+    private UserCredentials user;
 
     @OneToMany
     @JoinTable(name = "TopicComments", joinColumns = {
@@ -45,6 +51,22 @@ public class Topic {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public UserCredentials getUser() {
+        return user;
+    }
+
+    public void setUser(UserCredentials user) {
+        this.user = user;
     }
 
     public List<Comment> getComments() {

@@ -1,5 +1,6 @@
 package com.example.Forum.configs;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
@@ -22,9 +23,10 @@ import java.util.Properties;
         excludeFilters = {
                 @Filter(type = FilterType.ANNOTATION, value = EnableWebMvc.class)
         })
-@EnableJpaRepositories
+@EnableJpaRepositories(basePackages = "com.example.Forum.repositories")
 public class RootConfig {
 
+    @Qualifier("h2dbds")
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -37,7 +39,7 @@ public class RootConfig {
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(
-            DataSource dataSource, JpaVendorAdapter jpaVendorAdapter) {
+            @Qualifier("h2dbds") DataSource dataSource, JpaVendorAdapter jpaVendorAdapter) {
         LocalContainerEntityManagerFactoryBean emfb = new
                 LocalContainerEntityManagerFactoryBean();
         emfb.setDataSource(dataSource);
@@ -57,7 +59,7 @@ public class RootConfig {
     }
 
     @Bean
-    public LocalSessionFactoryBean sessionFactory(DataSource dataSource) {
+    public LocalSessionFactoryBean sessionFactory(@Qualifier("h2dbds") DataSource dataSource) {
         LocalSessionFactoryBean sfb = new LocalSessionFactoryBean();
         sfb.setDataSource(dataSource);
         sfb.setPackagesToScan(new String[]{"com.example.Forum"});

@@ -19,12 +19,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
 //                .authorizeRequests()
-//                .anyRequest().authenticated()
-//                .and()
-                .formLogin().loginPage("/login")
-                .and()
-                .headers().frameOptions().sameOrigin()
-                .and()
+//                    .antMatchers("/login","/register")
+//                    .permitAll()
+//                    .and()
+//                .authorizeRequests()
+//                    .anyRequest()
+//                    .authenticated()
+//                    .and()
+                .formLogin()
+                    .loginPage("/login")
+                    .and()
+                .headers()
+                    .frameOptions()
+                    .sameOrigin()
+                    .and()
+                .csrf()
+                    .disable()
                 .httpBasic();
 
     }

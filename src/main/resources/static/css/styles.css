@@ -1,0 +1,16 @@
+.content {
+    padding-top: 30px;
+}
+.category_title{
+    padding: 15px;
+    margin-bottom: 0px;
+}
+.subcategory_title{
+    color: black;
+}
+.border{
+    margin-bottom: 25px;
+}
+.text_desc_small{
+    font-size:13px;
+}
