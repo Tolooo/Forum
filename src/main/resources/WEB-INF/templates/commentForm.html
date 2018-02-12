@@ -16,29 +16,18 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="/css/styles.css" th:href="@{/css/styles.css}"/>
     <meta charset="UTF-8"/>
-    <title>Register</title>
+    <title>New Comment</title>
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
 <div class="container">
     <div class="content">
-        <h1 th:text="#{index.register}"></h1>
-        <form th:action='@{/register}' method='POST' th:object="${user}">
-            <div class="form-group w-25">
-                <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" name="username" placeholder="Enter username"/>
-            </div>
-            <div class="form-group w-25">
-                <label for="email">Email address</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Enter email"/>
-            </div>
-            <div class="form-group w-25">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Password"/>
-            </div>
-            <div class="form-group w-25">
-                <label for="password2">Repeat password</label>
-                <input type="password" class="form-control" id="password2" name="password2" placeholder="Password"/>
+        <h1 th:text="#{comment.title}"></h1>
+        <form th:action='@{${#httpServletRequest.requestURI}}' method='POST' th:object="${comment}">
+            <div class="form-group w-75">
+                <label for="description">Topic description</label>
+                <textarea rows="12" class="form-control" id="description" name="description"
+                          placeholder="Enter description"></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>

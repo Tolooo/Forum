@@ -1,5 +1,6 @@
 package com.example.Forum.models;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 
@@ -11,7 +12,9 @@ import java.util.List;
 public class UserCredentials {
 
     @Id
-    private long id;
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
+    private Long id;
 
     @Column(nullable = false, unique = true)
     @Length(min = 2, max = 30, message = "{user.username.length}")
@@ -38,11 +41,11 @@ public class UserCredentials {
     public UserCredentials() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -1,9 +1,11 @@
 package com.example.Forum.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import java.util.List;
@@ -12,7 +14,9 @@ import java.util.List;
 public class UserRole {
 
     @Id
-    private long id;
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
+    private Long id;
 
     @Length(min = 6, max = 30, message = "{role.role.length}")
     private String role;
@@ -24,11 +28,11 @@ public class UserRole {
     public UserRole() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

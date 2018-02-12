@@ -1,5 +1,7 @@
 package com.example.Forum.models;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -8,7 +10,9 @@ import java.util.List;
 public class Topic {
 
     @Id
-    private long id;
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
+    private Long id;
 
     private String title;
 
@@ -19,21 +23,24 @@ public class Topic {
     @OneToOne
     private UserCredentials user;
 
-    @OneToMany
-    @JoinTable(name = "TopicComments", joinColumns = {
-            @JoinColumn(name = "topic_id", nullable = false, updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "comments_id",
-                    nullable = false, updatable = false)})
+    @OneToMany(mappedBy = "topic")
+//    @JoinTable(name = "TopicComments", joinColumns = {
+//            @JoinColumn(name = "topic_id", nullable = false, updatable = false)},
+//            inverseJoinColumns = {@JoinColumn(name = "comments_id",
+//                    nullable = false, updatable = false)})
     private List<Comment> comments;
+
+    @ManyToOne
+    private Category category;
 
     public Topic() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -75,5 +82,13 @@ public class Topic {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

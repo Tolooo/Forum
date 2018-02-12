@@ -14,6 +14,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="/css/styles.css" th:href="@{/css/styles.css}"/>
     <meta charset="UTF-8"/>
     <title>Forum</title>
@@ -23,37 +24,38 @@
 <div class="container">
     <div class="content">
         <div class="row">
-            <div class="col-7">
-                <div class="border border-primary rounded bg-primary" th:each="category : ${category}">
-                    <h4 class="category_title bg-primary">
-                        <a class="text-light" href="/category" th:href="@{'/category/'+${category.id}}"
-                           th:text="${category.title}"></a>
-                    </h4>
+            <div class="col-10 mx-auto">
+                <div class="border border-primary rounded bg-primary">
+                    <h3 class="category_title text-light bg-primary" th:text="${topic.title}"></h3>
                     <div class="list-group">
-                        <div class="list-group-item list-group-item-action"
-                             th:each="subcategory : ${category.subCategories}">
-                            <h4>
-                                <a class="subcategory_title" href="/category" th:href="@{'/category/'+${subcategory.id}}"
-                                   th:text="${subcategory.title}"></a>
-                            </h4>
-                            <p th:text="${subcategory.description}"></p>
-                        </div>
-                        <div class="list-group-item" th:if="${category.subCategories.size()==0}">
-                            <h4 class="subcategory_title">There is no subcategory</h4>
+                        <div class="list-group-item">
+                            <p class="category_title" th:text="${topic.description}"></p>
+                            <p class="category_title"
+                               th:text="${topic.user.username+' - '+#dates.format(topic.creationDate, 'dd MMM yyyy, h:mm a')}">
+                            </p>
                         </div>
                     </div>
                 </div>
-                <br/>
             </div>
-            <div class="col-4 ml-auto">
+        </div>
+        <div class="row">
+            <div class="col-10 mx-auto">
                 <div class="border border-primary rounded bg-primary">
-                    <h4 class="category_title text-light bg-primary">Latest Topics</h4>
+                    <div class="d-flex w-100 justify-content-between">
+                        <h3 class="category_title text-light" th:text="Comments"></h3>
+                        <a class="category_title text-light" th:href="@{${#httpServletRequest.requestURI+'/comment/'}}"><i class="fas fa-plus"></i> Add Comment</a>
+                    </div>
                     <div class="list-group">
-                        <div class="list-group-item list-group-item-action" th:each="topic : ${latestTopics}">
-                            <h6><a class="subcategory_title"  href="/category" th:href="@{'/category/'+${topic.category.id} +'/topic/'+ ${topic.id}}"
-                                   th:text="${topic.title}"></a></h6>
-                            <p class="text_desc_small"
-                               th:text="${topic.user.username+' - '+#dates.format(topic.creationDate, 'dd MMM yyyy, h:mm a')}"></p>
+                        <div class="list-group-item"
+                             th:each="comment : ${topic.comments}">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="subcategory_title" th:text="${comment.user.username}"></h5>
+                                <small th:text="${#dates.format(comment.creationDate, 'dd MMM yyyy, h:mm a')}"></small>
+                            </div>
+                            <p th:text="${comment.description}"></p>
+                        </div>
+                        <div class="list-group-item" th:if="${topic.comments.size()==0}">
+                            <h6>There is no comments</h6>
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,7 @@
 package com.example.Forum.models;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -8,7 +10,9 @@ import java.util.List;
 public class Category {
 
     @Id
-    private long id;
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
+    private Long id;
 
     private String title;
 
@@ -26,21 +30,21 @@ public class Category {
                     nullable = false, updatable = false)})
     private List<Category> subCategories;
 
-    @OneToMany
-    @JoinTable(name = "CategoryTopics", joinColumns = {
-            @JoinColumn(name = "category_id", nullable = false, updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "topics_id",
-                    nullable = false, updatable = false)})
+    @OneToMany(mappedBy ="category")
+//    @JoinTable(name = "CategoryTopics", joinColumns = {
+//            @JoinColumn(name = "category_id", nullable = false, updatable = false)},
+//            inverseJoinColumns = {@JoinColumn(name = "topics_id",
+//                    nullable = false, updatable = false)})
     private List<Topic> topics;
 
     public Category() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

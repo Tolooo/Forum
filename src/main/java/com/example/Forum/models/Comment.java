@@ -1,15 +1,17 @@
 package com.example.Forum.models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 public class Comment {
 
     @Id
-    private long id;
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
+    private Long id;
 
     @OneToOne
     private UserCredentials user;
@@ -18,14 +20,17 @@ public class Comment {
 
     private Date creationDate;
 
+    @ManyToOne
+    private Topic topic;
+
     public Comment() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -53,4 +58,11 @@ public class Comment {
         this.creationDate = creationDate;
     }
 
+    public Topic getTopic() {
+        return topic;
+    }
+
+    public void setTopic(Topic topic) {
+        this.topic = topic;
+    }
 }
